@@ -43,16 +43,16 @@ class Game {
 	    	
 	    // Update player (p4)
 	    // World bounds
-	    this.p4.updateCoordinates()
-	    this.p4.checkBounds()
+	    this.p4.updateCoordinates();
+	    this.p4.checkBounds();
 
 	    // Update chest
 	    if(this.p4.checkCollision(this.gold))
 	    {
 	        // Load and play gold-sound
-	        this.sounds.gold()
+	        this.sounds.gold();
 
-	        this.gold.randomSpawn()
+	        this.gold.randomSpawn();
 
 	        this.p4.score += 10;
 	        this.enemies.push(new Enemy());
@@ -63,7 +63,7 @@ class Game {
 			if(this.p4.checkCollision(elem)) 
 			{
 				// Load and play hit-sound
-				this.sounds.hit()
+				this.sounds.hit();
 
 				// Stop game
 				this.gameLive = false;
@@ -79,7 +79,7 @@ class Game {
 	        if(elem.y + elem.height >= this.canvas.height - 3 || elem.y <= 5)
 	        {
 	            elem.yspeed = -elem.yspeed;
-	                elem.color = Random.getColor();
+	            elem.color = Random.getColor();
 	        }
 	        if(elem.x + elem.width >= this.canvas.width - 3 || elem.x <= 5)
 	        {
