@@ -1,20 +1,19 @@
 import {Random} from "./random.mjs";
 import {Canvas} from "./canvas.mjs";
 
-class Entities{
-	constructor(height,width,x,y,xspeed,yspeed){
-		this.height = height
-		this.width = width
-		this.x = x
-		this.y = y
-		this.xspeed=xspeed
-		this.yspeed=yspeed
+class Entities {
+	constructor(height, width, x, y, xspeed, yspeed) {
+		this.height = height;
+		this.width = width;
+		this.x = x;
+		this.y = y;
+		this.xspeed = xspeed;
+		this.yspeed = yspeed;
 	}
 
-
-	randomSpawn(){
-		this.x=Random.getX(this.width)
-		this.y=Random.getY(this.height)
+	randomSpawn() {
+		this.x = Random.getX(this.width);
+		this.y = Random.getY(this.height);
 	}
 
 	checkCollision(ent2)
@@ -26,29 +25,26 @@ class Entities{
     }
 }
 
-
-
-class Enemy extends Entities{
-	constructor(){
+class Enemy extends Entities {
+	constructor() {
 		const flag=Random.getBoolean()
 		super(
-			15,10,
+			15, 10,
 			Random.getX(10),
 			Random.getY(15),
-			flag?Random.getSpeed():0,
-			!flag?Random.getSpeed():0
+			flag ? Random.getSpeed():0,
+			!flag ? Random.getSpeed():0
 			)
 		this.color=Random.getColor()		
 	}
 }
 
-
-class P4 extends Entities{
-	constructor(){
+class P4 extends Entities {
+	constructor() {
 		super(
-				15,25,
-				10,(Canvas.dimensions().height/2),
-				4,4
+				15, 25,
+				10, (Canvas.dimensions().height/2),
+				4, 4
 			)
 		this.score = 0;
 		this.sprite = new Image();
@@ -137,9 +133,6 @@ class P4 extends Entities{
             this.y += this.yspeed;
         }
     }
-
-
-
 }
 
 class Gold extends Entities {
@@ -155,11 +148,6 @@ class Gold extends Entities {
 		this.sprite = new Image();
 		this.sprite.src = "http://127.0.0.1:5000/static/assets/gold.png";
 	}
-
 }
 
-
-export {Enemy,P4,Gold}
-
-
-
+export {Enemy,P4,Gold};

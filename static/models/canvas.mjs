@@ -1,5 +1,5 @@
-const HEIGHT = 450
-const WIDTH = 750
+const HEIGHT = 450;
+const WIDTH = 750;
 
 class Canvas {
 	constructor() {
@@ -9,11 +9,10 @@ class Canvas {
 	}
 
 	static dimensions() {
-		return {width:WIDTH,height:HEIGHT}
+		return {width:WIDTH, height:HEIGHT};
 	}
 
 	draw(game) {
-        // console.log(sprites.p4)
         // Clear canvas
         this.ctx.clearRect(0, 0, Canvas.dimensions().width, Canvas.dimensions().height);
 
@@ -29,9 +28,11 @@ class Canvas {
         this.ctx.font = "18px Verdana";
         this.ctx.fillStyle = "rgb(200,200,0)";
         this.ctx.fillText("Gold: " + game.p4.score + " Oz", Canvas.dimensions().width - 70, 20);
+
+        // Draw enemies
         game.enemies.forEach((elem) => {
             this.ctx.fillStyle = elem.color;
-            this.ctx.fillRect(elem.x,elem.y,elem.width,elem.height);
+            this.ctx.fillRect(elem.x, elem.y, elem.width, elem.height);
         })
 
         // this.ctx.fillText("Best: " + p4.best + " Oz", 70, 20);
@@ -53,8 +54,4 @@ class Canvas {
 
 }
 
-export {Canvas}
-
-
-
-
+export {Canvas};

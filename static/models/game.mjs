@@ -14,8 +14,8 @@ class Game {
 		this.restart = false;
 	}
 
-
 	handleSpace = (e) => {
+
         if(e.code == "Space" && this.restart)
         {
             // Load and play retry-sound
@@ -31,7 +31,7 @@ class Game {
             this.gold.y = this.gold.yinit;
 
             // set enemies' length to 1
-            this.enemies = [new Enemy()]
+            this.enemies = [new Enemy()];
             // Reset enemies
             this.gameLive = true;
             this.restart = false;
@@ -41,58 +41,55 @@ class Game {
 
     update() {
 	    	
-	        // Update player (p4)
-	        // World bounds
-	       this.p4.updateCoordinates()
-	       this.p4.checkBounds()
+	    // Update player (p4)
+	    // World bounds
+	    this.p4.updateCoordinates()
+	    this.p4.checkBounds()
 
-	        // Update chest
-	        if(this.p4.checkCollision(this.gold))
-	        {
-	            // Load and play gold-sound
-	            this.sounds.gold()
+	    // Update chest
+	    if(this.p4.checkCollision(this.gold))
+	    {
+	        // Load and play gold-sound
+	        this.sounds.gold()
 
-	            this.gold.randomSpawn()
+	        this.gold.randomSpawn()
 
-	            this.p4.score += 10;
-	            this.enemies.push(new Enemy());
-	        }
-
-	        // Update rectangles
-	        this.enemies.forEach( (elem) => {
-	            
-	            if(this.p4.checkCollision(elem)) {
-
-	                // Load and play hit-sound
-	                this.sounds.hit()
-
-	                // Stop game
-	                this.gameLive = false;
-
-	                // Handle space
-	                this.restart=true
-	                document.addEventListener("keydown", this.handleSpace);
-	            }
-
-	            elem.y += elem.yspeed;
-	            elem.x += elem.xspeed;
-
-	            if(elem.y + elem.height >= this.canvas.height - 3 || elem.y <= 5)
-	            {
-	                elem.yspeed = -elem.yspeed;
-	                elem.color = Random.getColor();
-	            }
-	            if(elem.x + elem.width >= this.canvas.width - 3 || elem.x <= 5)
-	            {
-	                elem.xspeed = -elem.xspeed;
-	                elem.color = Random.getColor();
-	            }
-	        });
+	        this.p4.score += 10;
+	        this.enemies.push(new Enemy());
 	    }
 
-	
+	    // Update rectangles
+	    this.enemies.forEach((elem) => {         
+			if(this.p4.checkCollision(elem)) 
+			{
+				// Load and play hit-sound
+				this.sounds.hit()
+
+				// Stop game
+				this.gameLive = false;
+
+				// Handle space
+				this.restart=true
+				document.addEventListener("keydown", this.handleSpace);
+	        }
+
+	        elem.y += elem.yspeed;
+	        elem.x += elem.xspeed;
+
+	        if(elem.y + elem.height >= this.canvas.height - 3 || elem.y <= 5)
+	        {
+	            elem.yspeed = -elem.yspeed;
+	                elem.color = Random.getColor();
+	        }
+	        if(elem.x + elem.width >= this.canvas.width - 3 || elem.x <= 5)
+	        {
+	            elem.xspeed = -elem.xspeed;
+	            elem.color = Random.getColor();
+	        }
+	    });
+	}
+
     step = () => {    	
-		// console.log(this)
         this.update();
         this.canvas.draw(this);
 
@@ -103,7 +100,7 @@ class Game {
 		    
     } 
 
-	run (){
+	run () {
 		window.addEventListener("load", ()=> {
 			this.gameLive = true
 			
