@@ -1,25 +1,25 @@
-import {Enemy, Gold, P4} from './entities.mjs'
-import {Canvas} from './canvas.mjs'
-import {Random} from './random.mjs'
-import {Sounds} from './sounds.mjs'
+import { Enemy, Gold, P4 } from "./entities.mjs";
+import { Canvas } from "./canvas.mjs";
+import { Random } from "./random.mjs";
+import { Sounds } from "./sounds.mjs";
 
-class Game{
-	constructor(){
-		this.gameLive=false
-		this.p4 = new P4()
-		this.enemies=[new Enemy()]
-		this.gold = new Gold()
-		this.canvas = new Canvas()
-		this.sounds = new Sounds()
-		this.restart=false
+class Game {
+	constructor() {
+		this.gameLive = false;
+		this.p4 = new P4();
+		this.enemies = [new Enemy()];
+		this.gold = new Gold();
+		this.canvas = new Canvas();
+		this.sounds = new Sounds();
+		this.restart = false;
 	}
 
 
-	handleSpace  = (e) =>{
+	handleSpace = (e) => {
         if(e.code == "Space" && this.restart)
         {
             // Load and play retry-sound
-            this.sounds.retry()
+            this.sounds.retry();
 
             // Reset player
             this.p4.score = 0;
@@ -27,14 +27,14 @@ class Game{
             this.p4.y = this.p4.yinit;
 
             // Reset gold
-            this.gold.x = this.gold.xinit
-            this.gold.y = this.gold.yinit
+            this.gold.x = this.gold.xinit;
+            this.gold.y = this.gold.yinit;
 
             // set enemies' length to 1
             this.enemies = [new Enemy()]
             // Reset enemies
             this.gameLive = true;
-            this.restart=false
+            this.restart = false;
             this.step();
         }
     }

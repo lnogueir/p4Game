@@ -1,5 +1,5 @@
-import {Random} from './random.mjs'
-import {Canvas} from './canvas.mjs'
+import {Random} from "./random.mjs";
+import {Canvas} from "./canvas.mjs";
 
 class Entities{
 	constructor(height,width,x,y,xspeed,yspeed){
@@ -50,15 +50,15 @@ class P4 extends Entities{
 				10,(Canvas.dimensions().height/2),
 				4,4
 			)
-		this.score=0
-		this.sprite = new Image()
-		this.sprite.src = "http://127.0.0.1:5000/static/assets/hero-face.png"
-		this.xinit = 10
-		this.yinit = Canvas.dimensions().height/2
-		this.isMovingLeft=false
-		this.isMovingRight=false
-		this.isMovingUp=false
-		this.isMovingDown=false
+		this.score = 0;
+		this.sprite = new Image();
+		this.sprite.src = "http://127.0.0.1:5000/static/assets/hero-face.png";
+		this.xinit = 10;
+		this.yinit = Canvas.dimensions().height/2;
+		this.isMovingLeft = false;
+		this.isMovingRight = false;
+		this.isMovingUp = false;
+		this.isMovingDown = false;
 	}
 
 	move = (e) => {
@@ -99,7 +99,7 @@ class P4 extends Entities{
         }
     }
 
-    updateCoordinates(){
+    updateCoordinates() {
     	if(this.isMovingRight) 
         {
             this.x += this.xspeed;
@@ -118,7 +118,7 @@ class P4 extends Entities{
         }
     }
 
-    checkBounds(){
+    checkBounds() {
     	if(this.x + this.width > Canvas.dimensions().width)
         {
             this.x -= this.xspeed; 
@@ -142,18 +142,18 @@ class P4 extends Entities{
 
 }
 
-class Gold extends Entities{
-	constructor(){
+class Gold extends Entities {
+	constructor() {
 		super(
-			18,40,
+			18, 40,
 			Canvas.dimensions().width - 46,
 			(Canvas.dimensions().height/2) - 15/4,
-			0,0
+			0, 0
 			)
-		this.xinit = Canvas.dimensions().width - 46  
-		this.yinit = (Canvas.dimensions().height/2) - 15/4
-		this.sprite = new Image()
-		this.sprite.src = "http://127.0.0.1:5000/static/assets/gold.png"
+		this.xinit = Canvas.dimensions().width - 46;  
+		this.yinit = (Canvas.dimensions().height/2) - 15/4;
+		this.sprite = new Image();
+		this.sprite.src = "http://127.0.0.1:5000/static/assets/gold.png";
 	}
 
 }
