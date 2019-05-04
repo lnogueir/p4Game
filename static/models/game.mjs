@@ -164,8 +164,7 @@ class Game {
         if(this.gameLive) 
         {
             window.requestAnimationFrame(this.step);
-        }
-		    
+        }	    
     } 
 
 	run () {
