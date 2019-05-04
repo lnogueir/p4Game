@@ -1,5 +1,6 @@
-import {Random} from "./random.mjs";
-import {Canvas} from "./canvas.mjs";
+import { Random } from "./random.mjs";
+import { Canvas } from "./canvas.mjs";
+import { Bot } from "./bot.mjs"
 
 class Entities {
 	constructor(height, width, x, y, xspeed, yspeed) {
@@ -16,12 +17,22 @@ class Entities {
 		this.y = Random.getY(this.height);
 	}
 
+    check_x_coordinate(ent2){
+        return this.x + this.width > ent2.x && this.x < ent2.x + ent2.width   
+    }
+
+    check_y_coordinate(ent2){
+        return this.y + this.height > ent2.y && this.y < ent2.y + ent2.height;
+    }
+
 	checkCollision(ent2)
     {
-        return this.x + this.width > ent2.x &&
-                this.x < ent2.x + ent2.width &&
-                this.y + this.height > ent2.y &&
-                this.y < ent2.y + ent2.height;
+        return this.check_x_coordinate(ent2) && this.check_y_coordinate(ent2)
+    }
+
+    checkRadius(ent2)
+    {
+        return 
     }
 }
 
@@ -55,7 +66,14 @@ class P4 extends Entities {
 		this.isMovingRight = false;
 		this.isMovingUp = false;
 		this.isMovingDown = false;
+        this.bot = null
 	}
+
+    initializeBot(){
+        if(!this.bot){
+            this.bot = new Bot()
+        }
+    }
 
 	move = (e) => {
        if(e.code == "ArrowRight") 
