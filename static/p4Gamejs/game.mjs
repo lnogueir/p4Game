@@ -54,6 +54,7 @@ class Game {
 
 	find_gold(){
 		var shouldY = this.p4.check_y_coordinate(this.gold)
+		var shouldX = this.p4.check_x_coordinate(this.gold)
 		if(shouldY){
 			return this.horizontal_instruction()
 		}else{
@@ -156,20 +157,31 @@ class Game {
 
 
 	    if(this.p4.bot){
+	    	// let instruction = this.find_gold()
 	    	let instruction
 	    	if(this.p4.isMovingRight || this.p4.isMovingLeft){
-	    		if(this.p4.danger && !this.p4.dangerHorizontal){
-	    			instruction = {prev_key:this.p4.bot.prev_key,new_key:'pause'}
-		    	}else if(this.p4.dangerHorizontal){
-		    		instruction = this.vertical_instruction()
-		    	}else{ //not dangerous
+	    		if(this.p4.danger){
+	    			if(!this.p4.dangerHorizontal && !this.p4.dangerVertical){
+	    				instruction = {prev_key:this.p4.bot.prev_key,new_key:'pause'}
+	    				console.log("PAUSEI IF HORIZONTAL")
+			    	}else if(this.p4.dangerHorizontal && !this.p4.dangerVertical){
+			    		instruction = this.vertical_instruction()
+			    	}else if(this.p4.dangerVertical){
+			    		instruction = this.horizontal_instruction()
+			    	}//else move diagonal..later
+	    		}else{ //not dangerous
 		    		instruction = this.find_gold()
 		    	}
 	    	}else if(this.p4.isMovingUp || this.p4.isMovingDown){
-	    		if(this.p4.danger && !this.p4.dangerVertical){
-	    			instruction = {prev_key:this.p4.bot.prev_key,new_key:'pause'}
-	    		}else if(this.p4.dangerVertical){
-	    			instruction=this.horizontal_instruction()
+	    		if(this.p4.danger){
+	    			if(!this.p4.dangerVertical && !this.p4.dangerHorizontal){
+		    			instruction = {prev_key:this.p4.bot.prev_key,new_key:'pause'}
+		    			console.log("PAUSEI IF VERTICAL")
+		    		}else if(this.p4.dangerVertical && !this.p4.dangerHorizontal){
+		    			instruction=this.horizontal_instruction()
+		    		}else if(this.p4.dangerHorizontal){
+		    			instruction = this.vertical_instruction()
+		    		}
 	    		}else{
 	    			instruction = this.find_gold()
 	    		}
@@ -181,6 +193,7 @@ class Game {
 	    				instruction=this.horizontal_instruction()
 	    			}else{
 	    				instruction = {prev_key:this.p4.bot.prev_key,new_key:'pause'}
+	    				console.log("PAUSEI IF PAUSED")
 	    			}
 	    		}else{
 	    			instruction = this.find_gold()	
@@ -192,7 +205,7 @@ class Game {
 		    		this.p4.bot.get_instructions(instruction)
 		    	}
 	    	}
-	    	//reset danger
+	    	// //reset danger
 	    	this.danger = this.dangerHorizontal = this.dangerVertical = false
 	    }	    
 
@@ -229,7 +242,7 @@ class Game {
 		    this.step();
 		});
 	  }
-}
+	}
 
 
 export {Game}
