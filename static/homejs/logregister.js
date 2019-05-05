@@ -3,10 +3,50 @@ var form = document.getElementById("userInfo");
 
 form.onsubmit = function(event) {
     event.preventDefault();
-    console.log(form.gamename.value);
+    const url = "http://127.0.0.1:5000/register";
+
+    const user_info = {
+        username: form.gamename.value,
+        password: form.password.value
+    }
+
+    fetch(url, {
+        method:"POST",
+        headers: {
+          "Accept":"application/json",
+          "Content-Type":"application/json",
+        },
+        body: JSON.stringify(user_info)
+    }).then(response => {
+        console.log(response);
+        if(response.status != 200)
+        {
+            alert("FUDEU");
+        }
+    });
 }
 
 document.getElementById("login").onclick = function() {
     event.preventDefault();
-    console.log(form.password.value);
+    const url = "http://127.0.0.1:5000/auth";
+
+    const user_info = {
+        username: form.gamename.value,
+        password: form.password.value
+    }
+
+    fetch(url, {
+        method:"POST",
+        headers: {
+          "Accept":"application/json",
+          "Content-Type":"application/json",
+        },
+        body: JSON.stringify(user_info)
+    }).then(response => {
+        console.log(response);
+        if(response.status != 200)
+        {
+            alert("User info is invalid or does not exist");
+        }
+    });
 }
