@@ -81,6 +81,18 @@
             background-color: aquamarine;
         }
 
+        input[type=button], select {
+            width: 10%;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            margin-top: 30px;
+            display: inline-block;
+            border-radius: 4px;
+            box-sizing: border-box;
+            border: 3pt solid rgb(27, 127, 134);
+            background-color: aquamarine;
+        }
+
         input[value=Log-in], select {
             color: rgb(27, 127, 134);
             font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -115,14 +127,14 @@
     <hr>
     <div id="formDiv"> <strong>Log-in to ranks!</strong>
         <form id="userInfo">
-              
               <input type="text" name="gamename" placeholder="Enter your Game-Name!">
-              <br> 
+            <br> 
               <input type="password" name="password" placeholder="Enter your password!">
             <br>
-              <input type="submit" value="Log-in">
-              <input type="submit" value="Register">
+              <input type="button" value="Log-in" id="login">
+              <input type="submit" value="Register" id="register">
         </form>
+        <script src="../static/homejs/logregister.js"></script>
     </div>
 </body>
 </html>

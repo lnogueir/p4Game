@@ -32,11 +32,63 @@
             color: cyan;
         }
 
+        table, th, td {
+            border: 1px solid rgb(27, 127, 134);
+            font-size: 101%;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            color: rgb(27, 127, 134);
+            background-color: aquamarine;
+            margin-left: 86.4%;
+        }
+
     </style>
 </head>
 <body bgcolor="#111111">
     <canvas width="750" height="450" id="myCanvas"></canvas>
     <script type="module" src="{{ url_for('static',filename='p4Gamejs/main.mjs') }}"></script>
     <h2><a href="http://127.0.0.1:5000/">Return to home page</a> - <a href="http://127.0.0.1:5000/game">Restart</a></h2>
+    <table>
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Game-Name</th>
+                    <th>Best Gold</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr id="r0">
+                    <td>1.</td>
+                </tr>
+                <tr id="r1">
+                    <td>2.</td>
+                </tr>
+                <tr id="r2">
+                    <td>3.</td>   
+                </tr>
+                <tr id="r3">
+                    <td>4.</td>
+                </tr>
+                <tr id="r4">
+                    <td>5.</td>
+                </tr>
+                <tr id="r5">
+                    <td>6.</td>   
+                </tr>
+                </tr>
+                <tr id="r6">
+                    <td>7.</td>
+                </tr>
+                <tr id="r7">
+                    <td>8.</td>   
+                </tr>
+                <tr id="r8">
+                    <td>9.</td>
+                </tr>
+                <tr id="r9">
+                    <td>10.</td>
+                </tr>
+            </tbody>
+        </table>
+        <script src="../static/p4Gamejs/ranks.js"></script>
 </body>
 </html>
