@@ -11,20 +11,21 @@
 
         body {
             margin: 0;
+            border: 4pt solid aquamarine;
+            border-radius: 6px;
         }
 
         h1 {
-            border: 4pt solid white;
             color: lightblue;
             font-family: Verdana, Geneva, Tahoma, sans-serif;
-            font-size: 40pt;
+            font-size: 68pt;
             text-align: center;
         }
 
         h2 {
             color: lightblue;
             font-family: Verdana, Geneva, Tahoma, sans-serif;
-            font-size: 35pt;
+            font-size: 59.5pt;
             text-align: center;
         }
 
@@ -32,6 +33,69 @@
             border: 3pt solid rgb(27, 127, 134);
             background-color: aquamarine;
             color: rgb(27, 127, 134);
+            border-radius: 6px;
+        }
+
+        #formDiv {
+            padding-top: 10px;
+            padding-bottom: 20px;
+            color: lightblue;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 59.5pt;
+            text-align: center;
+        }
+
+        input[type=text], select {
+            width: 35%;
+            padding-top: 17px;
+            padding-bottom: 17px;
+            margin-top: 0;
+            margin-bottom: -50px;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type=password], select {
+            width: 35%;
+            padding-top: 17px;
+            padding-bottom: 17px;
+            margin-top: -10px;
+            margin-bottom: 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type=submit], select {
+            width: 10%;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            margin-top: 30px;
+            display: inline-block;
+            border-radius: 4px;
+            box-sizing: border-box;
+            border: 3pt solid rgb(27, 127, 134);
+            background-color: aquamarine;
+        }
+
+        input[value=Register], select {
+            color: rgb(27, 127, 134);
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            font-size: 23.8pt;
+            font-weight: bold;
+            text-underline-position: below;
+            text-decoration: underline;
+        }
+
+        hr {
+            width: 60%;
+        }
+
+        label {
+            font-size: 14pt; 
         }
 
     </style>
@@ -39,5 +103,16 @@
 <body bgcolor="#111111">
     <h1>Welcome to Simplest Games!</h1>
     <h2><a href="http://127.0.0.1:5000/game">Play p4 Golden</a></h2>
+    <hr>
+    <div id="formDiv"> <strong>Register to ranks!</strong>
+        <form id="userInfo">
+              
+              <input type="text" name="firstName" placeholder="Enter your Game-Name!">
+              <br> 
+              <input type="password" name="password" placeholder="Enter your password!">
+            <br>
+              <input type="submit" value="Register">
+        </form>
+    </div>
 </body>
 </html>
