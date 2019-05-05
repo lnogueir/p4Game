@@ -29,11 +29,6 @@ class Entities {
     {
         return this.check_x_coordinate(ent2) && this.check_y_coordinate(ent2)
     }
-
-    checkRadius(ent2)
-    {
-        return 
-    }
 }
 
 class Enemy extends Entities {
@@ -67,11 +62,30 @@ class P4 extends Entities {
 		this.isMovingUp = false;
 		this.isMovingDown = false;
         this.bot = null
+        this.dangerVertical=false
+        this.dangerHorizontal=false
+        this.danger = false
 	}
 
     initializeBot(){
         if(!this.bot){
             this.bot = new Bot()
+        }
+    }
+
+    checkDanger(elem){
+        if(this.bot){
+            let xdiff = Math.abs(elem.x - this.x)
+            let ydiff = Math.abs(elem.y - this.y)
+            var distance_to_enemy = Math.sqrt(Math.pow(xdiff,2)+Math.pow(ydiff,2))
+            if(distance_to_enemy <=70){
+                if(this.check_x_coordinate(elem)){
+                    this.dangerVertical = true
+                }if(this.check_y_coordinate(elem)){
+                    this.dangerHorizontal = true
+                }
+                this.danger = true
+            }
         }
     }
 

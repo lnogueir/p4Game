@@ -16,10 +16,17 @@ def game():
 @app.route('/bot',methods=['POST'])
 def instructions():
 	request_data = request.get_json()
+	print(request_data)
 	if request_data['prev_key']:
-		pyautogui.keyUp(request_data['prev_key'])
-		
-	pyautogui.keyDown(request_data['new_key'])
+		if request_data['new_key']=='pause' or request_data['new_key']=='restart':
+			pyautogui.keyUp('right')
+			pyautogui.keyUp('left')
+			pyautogui.keyUp('up')
+			pyautogui.keyUp('down')
+		elif request_data['prev_key']!='pause' or request_data['prev_key']!='restart':	
+			pyautogui.keyUp(request_data['prev_key'])
+	if request_data['new_key']!='pause' and request_data['new_key']!='restart':
+		pyautogui.keyDown(request_data['new_key'])
 	return jsonify({"message":"Instruction passed successfully"}), 200
 
 

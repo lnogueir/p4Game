@@ -14,7 +14,6 @@ class Bot{
 		      body:JSON.stringify(instruction)
 		    })
 		//.then(response=>console.log(response))
-
 	}
 }
 
