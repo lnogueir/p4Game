@@ -1,5 +1,5 @@
 from flask import Flask,jsonify,request,render_template
-import pyautogui
+# import pyautogui
 
 app = Flask(__name__)
 
