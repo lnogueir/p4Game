@@ -7,41 +7,7 @@
     <title>p4 Golden</title>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
     <link rel="icon" href="{{ url_for('static', filename='assets/hero-face.png') }}">
-    <style type="text/css">
-    
-        body {
-            margin: 0;
-        }
-
-        canvas {
-            border: 4pt solid whitesmoke; 
-            width: 70%;
-            position: absolute;
-            top:25px; bottom:0; right: 0; left: 0;
-            margin: auto;
-        }
-
-        h2 {
-            text-align: center;
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-            font-size: 25pt;
-            color: cyan;
-        }
-
-        a {
-            color: cyan;
-        }
-
-        table, th, td {
-            border: 2.3px solid rgb(27, 127, 134);
-            font-size: 101%;
-            font-family: Verdana, Geneva, Tahoma, sans-serif;
-            color: rgb(27, 127, 134);
-            background-color: aquamarine;
-            margin-left: 86.4%;
-        }
-
-    </style>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/styles/game.css') }}">
 </head>
 <body bgcolor="#111111">
     <canvas width="750" height="450" id="myCanvas"></canvas>
@@ -89,6 +55,7 @@
                 </tr>
             </tbody>
         </table>
-        <script src="../static/p4Gamejs/ranks.js"></script>
+        <!-- <script src="../static/p4Gamejs/ranks.js"></script> -->
+        <script type='text/javascript' src="{{ url_for('static',filename='p4Gamejs/ranks.js') }}"></script>
 </body>
 </html>

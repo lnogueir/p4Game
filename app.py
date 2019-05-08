@@ -38,11 +38,11 @@ def instructions():
 	possibilities = ["right","left","up","down"]
 	request_data = request.get_json()
 	# print(request_data)
+	if request_data['new_key']!='pause' and request_data['new_key']!='restart':
+		pyautogui.keyDown(request_data['new_key'])
 	for p in possibilities:
 		if p!=request_data["new_key"]:
 			pyautogui.keyUp(p)
-	if request_data['new_key']!='pause' and request_data['new_key']!='restart':
-		pyautogui.keyDown(request_data['new_key'])
 	return jsonify({"message":"Instruction passed successfully"}), 200
 
 
@@ -56,12 +56,18 @@ def register():
 	return jsonify({'message':'User created successfully'})
 
 
-@app.route('/makegame')
+@app.route('/api/makegame')
 def makegame():
 	GameModel("P4Golden").save_to_db()
 	return jsonify({'message':'New game {} added'.format("P4Golden")})
 
 
+@app.route('/api/game')
+def game_info():
+	game = GameModel.find_by_game_name("P4Golden")
+	if game:
+		return jsonify(game.json())
+	return jsonify({'message':'Game not found'})
 
 
 

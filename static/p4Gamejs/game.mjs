@@ -56,10 +56,13 @@ class Game {
 		var shouldY = this.p4.check_y_coordinate(this.gold)
 		var shouldX = this.p4.check_x_coordinate(this.gold)
 		if(shouldY){
+			console.log("to aqui")
 			return this.horizontal_instruction()
 		}else{
+			console.log("por que nao ta andando krai")
 			return this.vertical_instruction()
 		}
+
 	}
 
 
@@ -163,11 +166,12 @@ class Game {
 	    		if(this.p4.danger){
 	    			if(!this.p4.dangerHorizontal && !this.p4.dangerVertical){
 	    				instruction = {prev_key:this.p4.bot.prev_key,new_key:'pause'}
-	    				console.log("PAUSEI IF HORIZONTAL")
 			    	}else if(this.p4.dangerHorizontal && !this.p4.dangerVertical){
-			    		instruction = this.vertical_instruction()
-			    	}else if(this.p4.dangerVertical){
-			    		instruction = this.horizontal_instruction()
+			    		// instruction = this.vertical_instruction()
+			    		instruction ={prev_key:this.p4.bot.prev_key,new_key:Math.random()>=0.5?"up":"down"}
+			    	}else if(this.p4.dangerVertical && !this.p4.dangerHorizontal){
+			    		// instruction = this.horizontal_instruction()
+			    		instruction ={prev_key:this.p4.bot.prev_key,new_key:(Math.random() >= 0.5)?"right":"left"}
 			    	}//else move diagonal..later
 	    		}else{ //not dangerous
 		    		instruction = this.find_gold()
@@ -176,24 +180,28 @@ class Game {
 	    		if(this.p4.danger){
 	    			if(!this.p4.dangerVertical && !this.p4.dangerHorizontal){
 		    			instruction = {prev_key:this.p4.bot.prev_key,new_key:'pause'}
-		    			console.log("PAUSEI IF VERTICAL")
 		    		}else if(this.p4.dangerVertical && !this.p4.dangerHorizontal){
-		    			instruction=this.horizontal_instruction()
-		    		}else if(this.p4.dangerHorizontal){
-		    			instruction = this.vertical_instruction()
+		    			instruction = {prev_key:this.p4.bot.prev_key,new_key:(Math.random() >= 0.5)?"right":"left"}
+		    			// instruction=this.horizontal_instruction()
+		    		}else if(this.p4.dangerHorizontal && !this.dangerVertical){
+		    			// instruction = this.vertical_instruction()
+		    			instruction ={prev_key:this.p4.bot.prev_key,new_key:(Math.random() >= 0.5)?"up":"down"}		    			
 		    		}
-	    		}else{
+	    		}else{	    			
 	    			instruction = this.find_gold()
 	    		}
 	    	}else{ //if paused
 	    		if(this.p4.danger){
 	    			if(this.p4.dangerHorizontal && !this.p4.dangerVertical){
-	    				instruction=this.vertical_instruction()
+	    				// instruction=this.vertical_instruction()
+	    				instruction ={prev_key:this.p4.bot.prev_key,new_key:(Math.random() >= 0.5)?"up":"down"}
 	    			}else if(this.p4.dangerVertical && !this.p4.dangerHorizontal){
-	    				instruction=this.horizontal_instruction()
-	    			}else{
+	    				// instruction=this.horizontal_instruction()
+	    				instruction ={prev_key:this.p4.bot.prev_key,new_key:(Math.random() >= 0.5)?"right":"left"}
+	    			}else if(!this.p4.dangerVertical && !this.p4.dangerHorizontal){
 	    				instruction = {prev_key:this.p4.bot.prev_key,new_key:'pause'}
-	    				console.log("PAUSEI IF PAUSED")
+	    			}else{
+
 	    			}
 	    		}else{
 	    			instruction = this.find_gold()	
@@ -201,12 +209,16 @@ class Game {
 	    	}
 	    	if(instruction){
 	    		this.p4.bot.prev_key = instruction.new_key
+	    		console.log(instruction.prev_key,this.p4.bot.prev_key)
 		    	if(instruction.prev_key!=this.p4.bot.prev_key){
 		    		this.p4.bot.get_instructions(instruction)
 		    	}
 	    	}
 	    	// //reset danger
-	    	this.danger = this.dangerHorizontal = this.dangerVertical = false
+	    	// this.p4.danger = this.p4.dangerHorizontal = this.p4.dangerVertical = false
+	    	this.p4.danger = false
+	    	this.p4.dangerHorizontal = false
+	    	this.p4.dangerVertical = false
 	    }	    
 
 	}
@@ -232,9 +244,11 @@ class Game {
 		    document.addEventListener("keydown", this.p4.move);
 		    document.addEventListener("keyup", this.p4.stop);
 
-		    this.p4.initializeBot()
+		    // this.p4.initializeBot()
 		    if(this.p4.bot){
-				this.horizontal_instruction()	
+				let instruction = this.find_gold()	
+				this.p4.bot.prev_key = instruction.new_key
+				this.p4.bot.get_instructions(instruction)
 			}
 
 

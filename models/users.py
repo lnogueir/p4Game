@@ -7,20 +7,21 @@ class UserModel(db.Model):
     username=db.Column(db.String(80))
     password=db.Column(db.String(80))
     score=db.Column(db.Integer)
-    game_id=db.Column(db.Integer,db.ForeignKey('games.id'))
-    # games=db.relationship('GameModel')
+    game_name=db.Column(db.String(80),db.ForeignKey('games.game_name'))
+    games=db.relationship('GameModel')
     
 
     def __init__(self,username,password):
         self.username=username
         self.password=password
         self.score=None
-        self.game_id=None
+        self.game_name=None
 
     def json(self):
         return {
             "username":self.username,
-            "best_score":self.score
+            "best_score":self.score,
+            "games":[game.game_name for game in self.games]
             }
 
     def save_to_db(self):
@@ -35,3 +36,15 @@ class UserModel(db.Model):
     @classmethod
     def find_by_id(cls,_id):
         return cls.query.filter_by(id=_id).first()
+
+
+
+
+
+
+
+
+
+
+
+

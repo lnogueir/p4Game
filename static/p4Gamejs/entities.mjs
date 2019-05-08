@@ -78,13 +78,13 @@ class P4 extends Entities {
             let xdiff = Math.abs(elem.x - this.x)
             let ydiff = Math.abs(elem.y - this.y)
             var distance_to_enemy = Math.sqrt(Math.pow(xdiff,2)+Math.pow(ydiff,2))
-            if(distance_to_enemy <=60){
+            if(distance_to_enemy <=120){
                 if(this.check_x_coordinate(elem)){
                     this.dangerVertical = true
                 }if(this.check_y_coordinate(elem)){
                     this.dangerHorizontal = true
                 }
-                this.danger = true
+                this.danger = true                        
             }
         }
     }
