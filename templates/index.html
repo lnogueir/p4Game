@@ -4,25 +4,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Home Page</title>
+    <title>Welcome</title>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
     <link rel="icon" href="{{ url_for('static', filename='assets/hero-face.png') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/styles/index.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/styles/styles.css') }}">
 </head>
-<body bgcolor="#111111">
+<body bgcolor="#111111" id="welcome-page">
     <h1>Welcome to Simplest Games!</h1>
-    <h2><a href="http://127.0.0.1:5000/game">Play p4 Golden</a></h2>
+    <!-- <h2><a href="http://127.0.0.1:5000/game">Play p4 Golden</a></h2> -->
     <hr>
-    <div id="formDiv"> <strong>Log-in to ranks!</strong>
+    <h1 id="login-title"><strong>Log-in to ranks!</strong></h1>
         <form id="userInfo">
-              <input type="text" name="gamename" placeholder="Enter your Game-Name!">
+          <div id="div-text-boxes">
+              <input type="text" name="gamename" id="name-box" class="text-box" placeholder=" Enter your Game-Name!">
             <br> 
-              <input type="password" name="password" placeholder="Enter your password!">
+              <input type="password" name="password" id="pw-box" class="text-box" placeholder=" Enter your password!">
             <br>
+          </div>
+          <div id="div-buttons">
               <input type="button" value="Log-in" id="login">
               <input type="submit" value="Register" id="register">
+              <input type="button" value="Guest" id="guest">
+          </div>    
         </form>
         <script src="../static/homejs/logregister.js"></script>
-    </div>
+    <footer></footer>
 </body>
 </html>

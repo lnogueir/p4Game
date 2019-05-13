@@ -1,0 +1,114 @@
+body {
+    margin: 0;
+}
+
+/*** Welcome Page Styles ***/
+#welcome-page h1 {
+    color: lightblue;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 250%;
+    text-align: center;
+}
+
+#welcome-page a {
+    border: 3pt solid rgb(27, 127, 134);
+    background-color: aquamarine;
+    color: rgb(27, 127, 134);
+    border-radius: 6px;
+}
+
+#welcome-page #login-title {
+    margin: 17px 0;
+}
+
+#welcome-page hr {
+    width: 40%;
+}
+
+#welcome-page label {
+    font-size: 10%; 
+}
+
+#welcome-page #div-text-boxes {
+    width: 14%;
+    margin: 0 auto;
+}
+
+#welcome-page .text-box {
+    width: 17%;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    line-height: 100%;
+}
+
+#welcome-page #name-box {
+    margin-top: 2%;
+    width: 100%;
+}
+
+#welcome-page #pw-box {
+    margin-top: 4%;
+    width: 100%; 
+}
+
+#welcome-page #div-buttons {
+    width: 14%;
+    margin: 0 auto;
+    text-align: center;
+    margin-bottom: 1%;
+    margin-top: 0.2%;
+}
+
+#welcome-page input[type=submit], input[type=button] {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin-top: 8px;
+    display: inline-block;
+    border-radius: 4px;
+    border: 3pt solid rgb(27, 127, 134);
+    background-color: aquamarine;
+}
+
+#welcome-page input[value=Register], input[value=Log-in], input[value=Guest] {
+    color: rgb(27, 127, 134);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 102%;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/*** Game Page Styles ***/
+#game-page {
+    margin: 0;
+}
+
+#game-page canvas {
+    border: 4pt solid whitesmoke; 
+    width: 70%;
+    position: absolute;
+    top:25px; bottom:0; right: 0; left: 0;
+    margin: auto;
+}
+
+#game-page h2 {
+    text-align: center;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 25pt;
+    color: cyan;
+}
+
+#game-page a {
+    color: cyan;
+}
+
+#game-page table, th, td {
+    border: 2.3px solid rgb(27, 127, 134);
+    font-size: 101%;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: rgb(27, 127, 134);
+    background-color: aquamarine;
+    margin-left: 85.8%;
+}
