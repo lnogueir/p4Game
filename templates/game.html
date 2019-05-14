@@ -7,9 +7,9 @@
     <title>p4 Golden</title>
     <script src="//cdn.jsdelivr.net/npm/phaser@3.11.0/dist/phaser.js"></script>
     <link rel="icon" href="{{ url_for('static', filename='assets/hero-face.png') }}">
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/styles/game.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='assets/styles/styles.css') }}">
 </head>
-<body bgcolor="#111111">
+<body bgcolor="#111111" id="game-page">
     <canvas width="750" height="450" id="myCanvas"></canvas>
     <script type="module" src="{{ url_for('static',filename='p4Gamejs/main.mjs') }}"></script>
     <h2><a href="http://127.0.0.1:5000/">Return to home page</a> - <a href="http://127.0.0.1:5000/game">Restart</a></h2>

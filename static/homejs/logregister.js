@@ -59,3 +59,9 @@ document.getElementById("login").onclick = function() {
         }
     });
 }
+
+document.getElementById("guest").onclick = function() {
+    event.preventDefault();
+    
+    window.location.assign("http://127.0.0.1:5000/home");
+}
