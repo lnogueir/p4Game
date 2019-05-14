@@ -2,69 +2,50 @@ import { Enemy, Gold, P4 } from "./entities.mjs";
 import { Canvas } from "./canvas.mjs";
 import { Random } from "./random.mjs";
 import { Sounds } from "./sounds.mjs";
+import { Bot } from "./bot.mjs"
+import { update_ranks } from "./ranks.mjs";
+
+
 
 class Game {
-	constructor() {
+	constructor(username,game) {
+		//Later when we have more games, create a parent class to store game_name and player, so these become parameters in super()
+		this.game_name = game
+		this.player = username
 		this.gameLive = false;
 		this.p4 = new P4();
+		this.bot = new Bot()
+		this.isBot = false
 		this.enemies = [new Enemy()];
 		this.gold = new Gold();
 		this.canvas = new Canvas();
 		this.sounds = new Sounds();
 		this.restart = false;
 	}
+
+
+	updateScore(){ //This method will also be on the parent class
+		let url = 'http://127.0.0.1:5000/api/rank'
+		const data = {
+			game_name:this.game_name,
+			username:this.player,
+			new_score:this.p4.score
+		}
+		fetch(url, {
+	        method:"POST",
+	        headers: {
+	          "Accept":"application/json",
+	          "Content-Type":"application/json",
+	        },
+	        body: JSON.stringify(data)
+	    })
+	    .then(response => {
+	    	if(response.status==200){
+	    		// update_ranks()
+	    	}
+	    }) 
+	}
 	
-	// find_instruction(){
-	// 	var shouldY = this.p4.check_y_coordinate(this.gold)
-	// 	var shouldX = this.p4.check_x_coordinate(this.gold)
-	// 	let xdiff = this.gold.x - this.p4.x;
-	// 	let xinstruction=null;
-	// 	let ydiff = this.gold.y - this.p4.y;
-	// 	let yinstruction=null;
-
-	// 	if(xdiff > 0 || (this.dangerLeft && this.dangerUp && this.dangerDown)){
-	// 		xinstruction = 'right'
-	// 	}else if(xdiff < 0 || (this.dangerRight && this.dangerUp && this.dangerDown)){
-	// 		xinstruction = 'left'
-	// 	}
-		
-	// 	return instruction
-	// }
-
-
-	horizontal_instruction(){
-		let instruction
-		if((this.gold.x - this.p4.x) > 0){
-			instruction = "right"
-		}else{
-			instruction = "left"
-		}
-		return {prev_key:this.p4.bot.prev_key,new_key:instruction}
-	}
-
-	vertical_instruction(){
-		let instruction
-		if((this.gold.y - this.p4.y) > 0){
-			instruction = "down"
-		}else{
-			instruction = "up"
-		}	
-		return {prev_key:this.p4.bot.prev_key,new_key:instruction}
-	}
-
-	find_gold(){
-		var shouldY = this.p4.check_y_coordinate(this.gold)
-		var shouldX = this.p4.check_x_coordinate(this.gold)
-		if(shouldY){
-			console.log("to aqui")
-			return this.horizontal_instruction()
-		}else{
-			console.log("por que nao ta andando krai")
-			return this.vertical_instruction()
-		}
-
-	}
-
 
 	handleSpace = (e) => {
 
@@ -79,11 +60,11 @@ class Game {
             this.p4.y = this.p4.yinit;
 
             //reset player Bot
-            if(this.p4.bot){
-            	this.p4.bot.get_instructions({
-            		prev_key:this.p4.bot.prev_key,
-            		new_key:'restart'
-            	})
+            if(this.isBot){
+            	// this.p4.bot.get_instructions({
+            	// 	prev_key:this.p4.bot.prev_key,
+            	// 	new_key:'restart'
+            	// })
             }
 
             // Reset gold
@@ -111,17 +92,13 @@ class Game {
 	    {	    	
 	        // Load and play gold-sound
 	        this.sounds.gold();
-
 	        this.gold.randomSpawn();
-	    
 	        this.p4.score += 10;
 	        this.enemies.push(new Enemy());
 	    }
 
 	    // Update rectangles
 	    this.enemies.forEach((elem) => {
-	    	
-
 
 			if(this.p4.checkCollision(elem)) 
 			{
@@ -130,10 +107,18 @@ class Game {
 
 				// Stop game
 				this.gameLive = false;
+				document.addEventListener("keydown", this.handleSpace);
+				//update player's highest score
+				if(!this.isBot){
+					this.updateScore()	
+				}else{
+					this.bot.statistics(this.p4)
+				}
+				
+
 
 				// Handle space
 				this.restart=true
-				document.addEventListener("keydown", this.handleSpace);
 			
 	        }
 
@@ -142,8 +127,8 @@ class Game {
 
 
 
-	        if(this.p4.bot){
-	    		this.p4.checkDanger(elem)	
+	        if(this.isBot){
+	    		this.bot.checkDanger(this.p4,elem)	
 	    	}
 
 	        if(elem.y + elem.height >= this.canvas.height - 3 || elem.y <= 5)
@@ -159,66 +144,9 @@ class Game {
 	    });
 
 
-	    if(this.p4.bot){
-	    	// let instruction = this.find_gold()
-	    	let instruction
-	    	if(this.p4.isMovingRight || this.p4.isMovingLeft){
-	    		if(this.p4.danger){
-	    			if(!this.p4.dangerHorizontal && !this.p4.dangerVertical){
-	    				instruction = {prev_key:this.p4.bot.prev_key,new_key:'pause'}
-			    	}else if(this.p4.dangerHorizontal && !this.p4.dangerVertical){
-			    		// instruction = this.vertical_instruction()
-			    		instruction ={prev_key:this.p4.bot.prev_key,new_key:Math.random()>=0.5?"up":"down"}
-			    	}else if(this.p4.dangerVertical && !this.p4.dangerHorizontal){
-			    		// instruction = this.horizontal_instruction()
-			    		instruction ={prev_key:this.p4.bot.prev_key,new_key:(Math.random() >= 0.5)?"right":"left"}
-			    	}//else move diagonal..later
-	    		}else{ //not dangerous
-		    		instruction = this.find_gold()
-		    	}
-	    	}else if(this.p4.isMovingUp || this.p4.isMovingDown){
-	    		if(this.p4.danger){
-	    			if(!this.p4.dangerVertical && !this.p4.dangerHorizontal){
-		    			instruction = {prev_key:this.p4.bot.prev_key,new_key:'pause'}
-		    		}else if(this.p4.dangerVertical && !this.p4.dangerHorizontal){
-		    			instruction = {prev_key:this.p4.bot.prev_key,new_key:(Math.random() >= 0.5)?"right":"left"}
-		    			// instruction=this.horizontal_instruction()
-		    		}else if(this.p4.dangerHorizontal && !this.dangerVertical){
-		    			// instruction = this.vertical_instruction()
-		    			instruction ={prev_key:this.p4.bot.prev_key,new_key:(Math.random() >= 0.5)?"up":"down"}		    			
-		    		}
-	    		}else{	    			
-	    			instruction = this.find_gold()
-	    		}
-	    	}else{ //if paused
-	    		if(this.p4.danger){
-	    			if(this.p4.dangerHorizontal && !this.p4.dangerVertical){
-	    				// instruction=this.vertical_instruction()
-	    				instruction ={prev_key:this.p4.bot.prev_key,new_key:(Math.random() >= 0.5)?"up":"down"}
-	    			}else if(this.p4.dangerVertical && !this.p4.dangerHorizontal){
-	    				// instruction=this.horizontal_instruction()
-	    				instruction ={prev_key:this.p4.bot.prev_key,new_key:(Math.random() >= 0.5)?"right":"left"}
-	    			}else if(!this.p4.dangerVertical && !this.p4.dangerHorizontal){
-	    				instruction = {prev_key:this.p4.bot.prev_key,new_key:'pause'}
-	    			}else{
-
-	    			}
-	    		}else{
-	    			instruction = this.find_gold()	
-	    		}
-	    	}
-	    	if(instruction){
-	    		this.p4.bot.prev_key = instruction.new_key
-	    		console.log(instruction.prev_key,this.p4.bot.prev_key)
-		    	if(instruction.prev_key!=this.p4.bot.prev_key){
-		    		this.p4.bot.get_instructions(instruction)
-		    	}
-	    	}
-	    	// //reset danger
-	    	// this.p4.danger = this.p4.dangerHorizontal = this.p4.dangerVertical = false
-	    	this.p4.danger = false
-	    	this.p4.dangerHorizontal = false
-	    	this.p4.dangerVertical = false
+	    if(this.isBot){
+	    	this.bot.instruction(this.p4,this.gold)
+	    	
 	    }	    
 
 	}
@@ -244,13 +172,7 @@ class Game {
 		    document.addEventListener("keydown", this.p4.move);
 		    document.addEventListener("keyup", this.p4.stop);
 
-		    // this.p4.initializeBot()
-		    if(this.p4.bot){
-				let instruction = this.find_gold()	
-				this.p4.bot.prev_key = instruction.new_key
-				this.p4.bot.get_instructions(instruction)
-			}
-
+		    this.isBot = true 
 
 			this.update()	    
 		    this.step();

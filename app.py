@@ -1,11 +1,12 @@
 from flask import Flask,jsonify,request,render_template
-from models.users import UserModel
+from models.users import UserModel,UserStatus
 from security import authentication, identity
 from flask_jwt import JWT
 from db import db
 from models.games import GameModel
 from security import hash_password
 import pyautogui
+import os
 
 app = Flask(__name__)
 
@@ -34,16 +35,29 @@ def game():
     return render_template("game.html")
 
 @app.route('/bot',methods=['POST'])
-def instructions():
-	possibilities = ["right","left","up","down"]
-	request_data = request.get_json()
-	# print(request_data)
-	if request_data['new_key']!='pause' and request_data['new_key']!='restart':
-		pyautogui.keyDown(request_data['new_key'])
-	for p in possibilities:
-		if p!=request_data["new_key"]:
-			pyautogui.keyUp(p)
-	return jsonify({"message":"Instruction passed successfully"}), 200
+def statistics():
+	request_data = request.get_json()	
+	statistic = None
+	if not os.path.isfile('bot_statistics.txt'):
+		open('bot_statistics.txt','w').close()
+	statistic = open('bot_statistics.txt','a')
+	statistic.write(str(request_data['score'])+'\n')
+	statistic.close()
+	scores = open('bot_statistics.txt','r')
+	i = mean = 0
+	for score in scores:
+		mean+=int(score)
+		i+=1
+	mean=float(mean)/i
+	scores.close()	
+	pyautogui.press('space')
+	return jsonify({"message":"Bot average score: {}".format(mean)})
+
+
+@app.route('/users')
+def users():
+	users = UserModel.all_users()
+	return jsonify({"users":[user.username for user in users]})
 
 
 @app.route('/register',methods=['POST'])
@@ -62,12 +76,22 @@ def makegame():
 	return jsonify({'message':'New game {} added'.format("P4Golden")})
 
 
-@app.route('/api/game')
+@app.route('/api/game',methods=['POST'])
 def game_info():
-	game = GameModel.find_by_game_name("P4Golden")
+	json = request.get_json()
+	user = UserStatus.find_user_by_game_name(json['game_name'],json['username'])
+	if not user:
+		UserStatus(json['username'],json['game_name']).save_to_db()
+	game = GameModel.find_by_game_name(json['game_name'])
 	if game:
 		return jsonify(game.json())
 	return jsonify({'message':'Game not found'})
+
+
+@app.route('/api/rank',methods=['POST'])
+def update_score():
+	player = request.get_json()
+	return jsonify(UserStatus.update_score(player['game_name'],player['username'],player['new_score']))
 
 
 

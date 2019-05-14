@@ -1,4 +1,13 @@
 /* eslint-disable no-console */
+
+
+
+let url = 'http://127.0.0.1:5000/users'
+fetch(url)
+.then(response=>response.json())
+.then(responseJson=>console.log(responseJson))
+
+
 var form = document.getElementById("userInfo");
 
 form.onsubmit = function(event) {
