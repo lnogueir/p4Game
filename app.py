@@ -44,14 +44,15 @@ def statistics():
 	statistic.write(str(request_data['score'])+'\n')
 	statistic.close()
 	scores = open('bot_statistics.txt','r')
-	i = mean = 0
+	i = mean = best = 0
 	for score in scores:
+		best = int(score) if best < int(score) else best
 		mean+=int(score)
 		i+=1
 	mean=float(mean)/i
 	scores.close()	
 	pyautogui.press('space')
-	return jsonify({"message":"Bot average score: {}".format(mean)})
+	return jsonify({"average":str(mean),"best_score":str(best)})
 
 
 @app.route('/users')
